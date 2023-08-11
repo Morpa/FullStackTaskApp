@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared/shared.dart';
 
+import 'core/mutations/get_all_tasks.dart';
+import 'widgets/add_task_widget.dart';
 import 'widgets/task_list_view.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,47 +12,20 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tasks'),
+        actions: [
+          IconButton(
+            onPressed: () => GetAllTasksMutation(),
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: TaskListView(
-                  tasks: [
-                    Task(id: 'id', title: 'title', isCompleted: false),
-                    Task(id: 'id2', title: 'title2', isCompleted: true),
-                    Task(id: 'id3', title: 'title3', isCompleted: false),
-                  ],
-                ),
-              )
-            ],
-          ),
+          padding: EdgeInsets.all(16.0),
+          child: TaskListView(),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            const Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'New task',
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            FloatingActionButton(
-              onPressed: () {},
-              child: const Icon(Icons.done),
-            )
-          ],
-        ),
-      ),
+      bottomNavigationBar: const AddTaskWidget(),
     );
   }
 }
