@@ -9,10 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
-    VxState(
-      store: TaskStore(),
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }
 
@@ -23,13 +20,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     GetAllTasksMutation();
 
-    return MaterialApp(
-      title: 'Flutter Task',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      home: const HomePage(),
+    return VxApp(
+      store: TaskStore(),
+      builder: (context, appData) {
+        return MaterialApp(
+          title: 'Flutter Task',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            useMaterial3: true,
+            brightness: appData.isDarkMode ? Brightness.dark : Brightness.light,
+          ),
+          home: const HomePage(),
+        );
+      },
     );
   }
 }
